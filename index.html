@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="  viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Site</title>
 </head>
 <body>
@@ -24,7 +25,7 @@
     Labore, quos? Libero, dolor expedita? Ea provident tenetur soluta eaque praesentium repellat incidunt sit numquam quaerat? Adipisci doloribus nostrum commodi voluptate nam itaque quaerat labore maxime minima! Quia, aliquid ratione!
     Aperiam ex explicabo ratione sequi quam neque delectus eum vel debitis tempora praesentium eveniet ut voluptatem aliquid ad odio consequatur quia molestiae impedit, culpa nobis itaque ipsum quis dolorem. Hic.
     Error illo vel sunt mollitia! Atque minima sit laudantium esse id blanditiis laboriosam, accusamus cupiditate necessitatibus sunt. Sit quas rerum praesentium adipisci culpa veniam dolore consectetur vitae, vero, debitis illum.</p>
-
+    <form id="meu-form">
     <form
   action="https://formspree.io/f/xdaqjgzn"
   method="POST"
@@ -40,5 +41,31 @@
   <!-- your other form fields go here -->
   <button type="submit">Send</button>
 </form>
+<script>
+  const form = document.getElementById('meu-form');
+  const textPost = document.getElementById('texto-post')
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        textoPost.innerText = "🤖 A IA está pensando...";
+
+        // Faz a requisição direto para o Webhook de PRODUÇÃO do n8n
+        const response = await fetch('Colocar link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+          })
+        });
+
+        // Pede para o navegador ler a resposta como texto puro
+        const text = await response.text();
+
+        // Substitui o texto pela resposta da IA!
+        textoPost.innerHTML = marked.parse(text);
+      });
+</script>
 </body>
 </html>
